@@ -1,17 +1,19 @@
 import os
+import requests
 from dotenv import load_dotenv
-import telebot
 
 load_dotenv()
 TELEGRAM_API_KEY = os.getenv("TELEGRAM_API_KEY")
 TELEGRAM_GRP_ID = os.getenv("TELEGRAM_GRP_ID")
-bot = telebot.TeleBot(TELEGRAM_API_KEY)
-
+url = f"https://api.telegram.org/bot{TELEGRAM_API_KEY}/sendMessage?chat_id={TELEGRAM_GRP_ID}&text=SAATANA"
 
 def main():
     print("Hello")
-    bot.send_message(TELEGRAM_GRP_ID, "SAATANA")
-
+    try:
+        res = requests.get(url, timeout=8, allow_redirects=True)
+        print(res)
+    except requests.exceptions.Timeout as err: 
+        print(err)
 
 if __name__ == "__main__":
     main()
